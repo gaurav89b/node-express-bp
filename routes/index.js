@@ -12,5 +12,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/users', user_controller.list);
 router.get('/users/detail', user_controller.detail);
+router.post('/users/post', user_controller.post);
 
 module.exports = router;
