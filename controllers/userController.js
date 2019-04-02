@@ -5,17 +5,27 @@
 // Display list of all Genre.
 const UserModel = require('../models').User;
 const Joi = require('joi');
+const UserRepo = require('../repositories').user;
 
 let User = {};
-User.list = function(req, res) {
+/*User.list = function(req, res) {
     UserModel.findAll().then(users => {
         // projects will be an array of all Project instances
         res.status(200).send(users)
     })
     //res.send('NOT IMPLEMENTED: Genre list');
+};*/
+
+User.list = async function(req, res) {
+    const user = await UserRepo.list();
+    res.status(200).send(user);
 };
 
 User.detail = function(req, res) {
+    return UserModel.findAll({
+        where: { id: 1 } 
+    })
+    .then(user => res.json(user))
     res.send('NOT IMPLEMENTED: Genre detail index key value');
 };
 
