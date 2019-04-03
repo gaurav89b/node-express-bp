@@ -122,6 +122,34 @@ User.create = async function(req, res) {
  *     description: Login
  *     produces:
  *       - application/json
+ *     parameters:
+ *       - name: token
+ *         in: header
+ *         description: token to be passed as a header
+ *         required: true
+ *         type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *         type: integer
+ *         required: false
+ *         description: pageno
+ *       - name: body
+ *         in: body
+ *         description: status
+ *         required: true
+ *         schema:
+ *          type: object
+ *          required:
+ *           - Order
+ *          properties:
+ *           email:
+ *            type: string
+ *            enum: [0, 1]
+ *            default: "a@borrows.com"
+ *           password:
+ *            type: string
+ *            example: "123444"
  *     responses:
  *       200:
  *         description: An array of users
