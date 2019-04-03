@@ -23,6 +23,23 @@ let User = {};
     //res.send('NOT IMPLEMENTED: Genre list');
 };*/
 
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     tags:
+ *       - users
+ *     description: Returns all users
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of users
+ *         schema:
+ *           //$ref: '#/definitions/users'
+ */
+
+
 User.list = async function(req, res) {
     const user = await UserService.list();
     let obj = {

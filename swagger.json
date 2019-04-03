@@ -13,7 +13,7 @@
     "basePath": "/",
     "tags": [
       {
-        "name": "Notifications",
+        "name": "API",
         "description": "API for user in the system"
       }
     ],
