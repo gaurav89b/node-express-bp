@@ -65,33 +65,29 @@ User.create = function(req, res) {
 
     let data = req.body;
     // validate the request data against the schema
-    Joi.validate(data, schema, (err, value) => {
-        // create a random number as id
-        const id = Math.ceil(Math.random() * 9999999);
-        if (err) {
-            console.log(err);
-            // send a 422 error response if validation fails
-            return res.status(200).json({
-                status: 'error',
-                message: 'Invalid request data',
-                data: data
-            });
-        } else {
-            console.log(req.body.name);
-            /*let userObj = {
-                name:"Name",
-                email:"Email",
-                password:"Password"
-            };*/
-            return UserModel
+    const isValid = Joi.validate(data, schema);
+    console.log(isValid);
+    if (isValid.error) {
+        let obj = {
+            status:0,
+            message:"error",
+            data:isValid.error
+        };
+        prepareResponse(res, obj);
+        return
+    }
+    return UserModel
             .create(data)
-            .then(user => res.status(200).json(user))
+            .then(user => {
+                //res.status(200).json(user)
+                let obj = {
+                    status:1,
+                    message:"success",
+                    data:user
+                };
+                prepareResponse(res, obj)
+            })
             .catch();
-        }
-    });
-
-    
-    //res.send('NOT IMPLEMENTED: Genre post 1');
 };
 
 module.exports = User;
