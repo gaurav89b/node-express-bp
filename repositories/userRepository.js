@@ -14,4 +14,15 @@ obj.list = function() {
     })*/
     //res.send('NOT IMPLEMENTED: Genre list');
 };
+
+obj.create = function(data) {
+    return new Promise(function (resolve, reject) {
+        UserModel.create(data)
+            .then((user) => {
+                resolve(user)
+            })
+    });
+    //.catch();
+}
+
 module.exports = obj;

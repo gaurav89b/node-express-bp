@@ -71,11 +71,24 @@ User.create = function(req, res) {
         let obj = {
             status:0,
             message:"error",
-            data:isValid.error
+            data:isValid.error,
+            statusCode:401
         };
         prepareResponse(res, obj);
         return
     }
+    var createUser = UserService.create(data);
+    createUser
+        .then((user) => {
+            let obj = {
+                status:1,
+                message:"success1ßß",
+                data:user
+            };
+            prepareResponse(res, obj)
+        })
+        .catch();
+    /*
     return UserModel
             .create(data)
             .then(user => {
@@ -86,8 +99,7 @@ User.create = function(req, res) {
                     data:user
                 };
                 prepareResponse(res, obj)
-            })
-            .catch();
+            });*/
 };
 
 module.exports = User;
