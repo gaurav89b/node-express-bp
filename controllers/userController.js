@@ -10,6 +10,9 @@
 // Display list of all Genre.
 const UserModel = require('../models').User;
 const Joi = require('joi');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 //const UserRepo = require('../repositories').user;
 const UserService = require('../services').user;
 const {prepareResponse} = require('../utilities/responseParserUtility');
@@ -65,7 +68,7 @@ User.post = function(req, res) {
     res.send('NOT IMPLEMENTED: Genre post 1');
 };
 
-User.create = function(req, res) {
+User.create = async function(req, res) {
 
     // 1) validate request
     // 2) call service function
@@ -94,29 +97,52 @@ User.create = function(req, res) {
         prepareResponse(res, obj);
         return
     }
+    const salt = await bcrypt.genSalt(10);
+    data.password = await bcrypt.hash(data.password, salt);
     var createUser = UserService.create(data);
     createUser
         .then((user) => {
             let obj = {
                 status:1,
-                message:"success1ßß",
+                message:"success",
                 data:user
             };
             prepareResponse(res, obj)
         })
         .catch();
-    /*
-    return UserModel
-            .create(data)
-            .then(user => {
-                //res.status(200).json(user)
-                let obj = {
-                    status:1,
-                    message:"success",
-                    data:user
-                };
-                prepareResponse(res, obj)
-            });*/
 };
+
+User.login = async function(req, res) {
+    console.log(req.body);
+    let obj = {
+        data:req.body
+    }
+    let email = req.body.email;
+    let password = req.body.password;
+    let user =  await UserModel.findOne({
+        where: { email: email },
+        order: [
+            // Will escape title and validate DESC against a list of valid direction parameters
+            ['id', 'DESC'],
+        ]
+    });
+    if (!user) {
+        obj.data.error = "no email found";
+        prepareResponse(res, obj)
+        return;
+    }
+    console.log(user);
+    console.log(password);
+    console.log(user.password);
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) {
+        obj.data.error = "Not valid password";
+    } else {
+        let token = jwt.sign({id:user.id, name:user.name, email: user.email}, "jwtPrivateKey");
+        obj.data.error = "valid password";
+        obj.data.token = token;
+    }
+    prepareResponse(res, obj)
+}
 
 module.exports = User;

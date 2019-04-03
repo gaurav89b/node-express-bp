@@ -1,5 +1,5 @@
 const UserModel = require('../models').User;
-
+const _ = require('lodash');
 let obj = {};
 
 obj.list = function() {
@@ -19,6 +19,7 @@ obj.create = function(data) {
     return new Promise(function (resolve, reject) {
         UserModel.create(data)
             .then((user) => {
+                user = _.pick(user, ['id', 'name', 'email'])
                 resolve(user)
             })
     });
