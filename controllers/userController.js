@@ -2,10 +2,17 @@
  * User specific routes method goes here.
  * 
  */
+
+// 1) validate request
+// 2) call service function
+// 3) send respone
+
 // Display list of all Genre.
 const UserModel = require('../models').User;
 const Joi = require('joi');
-const UserRepo = require('../repositories').user;
+//const UserRepo = require('../repositories').user;
+const UserService = require('../services').user;
+const {prepareResponse} = require('../utilities/responseParserUtility');
 
 let User = {};
 /*User.list = function(req, res) {
@@ -17,8 +24,14 @@ let User = {};
 };*/
 
 User.list = async function(req, res) {
-    const user = await UserRepo.list();
-    res.status(200).send(user);
+    const user = await UserService.list();
+    let obj = {
+        status:1,
+        message:2,
+        data:user
+    };
+    prepareResponse(res, obj);
+    //res.status(200).send(user);
 };
 
 User.detail = function(req, res) {
@@ -36,6 +49,10 @@ User.post = function(req, res) {
 };
 
 User.create = function(req, res) {
+
+    // 1) validate request
+    // 2) call service function
+    // 3) send respone
     // define the validation schema
     const schema = Joi.object().keys({
 

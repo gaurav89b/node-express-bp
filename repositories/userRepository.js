@@ -2,8 +2,11 @@ const UserModel = require('../models').User;
 
 let obj = {};
 
-obj.list = function(req, res) {
-    return UserModel.findAll();
+obj.list = function() {
+    //try {
+        return UserModel.findAll();
+    //}
+    
     /*UserModel.findAll().then(users => {
         // projects will be an array of all Project instances
         console.log(users);
