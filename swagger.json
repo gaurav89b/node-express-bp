@@ -1,0 +1,75 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "API",
+      "description": "All the enpoints used for API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Notifications",
+        "description": "API for user in the system"
+      }
+    ],
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/users": {
+        "parameters": [
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "limit",
+            "type": "integer"
+          },
+          {
+            "name": "page_no",
+            "in": "query",
+            "required": false,
+            "description": "page number",
+            "type": "integer"
+          },
+          {
+            "name": "auth-id",
+            "in": "header",
+            "required": false,
+            "description": "User id for authentication",
+            "type": "integer"
+          },
+          {
+            "name": "auth-bearer",
+            "in": "header",
+            "required": false,
+            "description": "token for authentication",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Notifications"
+          ],
+          "summary": "Get user",
+          "responses": {
+            "200": {
+              "description": "User"
+            }
+          }
+        }
+      }
+    }
+  }
