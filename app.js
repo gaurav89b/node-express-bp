@@ -8,13 +8,21 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 //const responseHandler = require('./middlewares/responseMiddleware');
 
+const config = require('config');
 var app = express();
 
+console.log(config.get("jwtPrivateKey"));
+if (!config.get("jwtPrivateKey")) {
+  console.log("env_not_set");
+  // @todo move it also handle it gracefully i.e restart
+  process.exit(1);
+}
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+const {prepareResponse} = require('./utilities/responseParserUtility');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -77,8 +85,14 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.send('error');
+  //res.status(err.status || 500);
+  //res.send('error');
+  let obj = {
+      message:"Something went wrong.",
+      data:{},
+      statusCode:500
+  };
+  prepareResponse(res, obj)
 });
 
 module.exports = app;

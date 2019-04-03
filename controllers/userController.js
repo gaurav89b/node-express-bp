@@ -12,6 +12,7 @@ const UserModel = require('../models').User;
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const config = require('config');
 
 //const UserRepo = require('../repositories').user;
 const UserService = require('../services').user;
@@ -112,6 +113,21 @@ User.create = async function(req, res) {
         .catch();
 };
 
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     tags:
+ *       - users
+ *     description: Login
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of users
+ *         schema:
+ *           //$ref: '#/definitions/users'
+ */
 User.login = async function(req, res) {
     console.log(req.body);
     let obj = {
@@ -138,7 +154,7 @@ User.login = async function(req, res) {
     if (!isValid) {
         obj.data.error = "Not valid password";
     } else {
-        let token = jwt.sign({id:user.id, name:user.name, email: user.email}, "jwtPrivateKey");
+        let token = jwt.sign({id:user.id, name:user.name, email: user.email}, config.get("jwtPrivateKey"));
         obj.data.error = "valid password";
         obj.data.token = token;
     }

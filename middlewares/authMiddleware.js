@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const {prepareResponse} = require('../utilities/responseParserUtility');
-
+const config = require('config');
 function auth(req, res, next) {
     const token = req.header('x-auth-token');
     if (!token) {
@@ -13,7 +13,7 @@ function auth(req, res, next) {
         return;
     }
     try {
-        const decoded = jwt.verify(token, 'jwtPrivateKey');
+        const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
         console.log(decoded);
         req.user = decoded;
         next();
