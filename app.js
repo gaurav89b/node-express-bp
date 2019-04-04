@@ -11,6 +11,13 @@ var usersRouter = require('./routes/users');
 const config = require('config');
 var app = express();
 
+var loggerD = require('./utilities/loggerUtility');
+
+loggerD.logError("teserror");
+loggerD.logInfo("testinfo");
+loggerD.logWarning("teswarning");
+loggerD.logMessage("tesmessage", "debug");
+
 console.log(config.get("jwtPrivateKey"));
 if (!config.get("jwtPrivateKey")) {
   console.log("env_not_set");
