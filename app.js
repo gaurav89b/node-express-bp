@@ -54,6 +54,14 @@ if (process.env.NODE_ENV !== 'production') {
           "description": "API for user in the system"
         }
       ],
+      securityDefinitions: {
+        bearerAuth: {
+          type: 'apiKey',
+          name: 'x-auth-token',
+          scheme: 'bearer',
+          in: 'header',
+        },
+      },
       schemes: [
         "http",
         "https"

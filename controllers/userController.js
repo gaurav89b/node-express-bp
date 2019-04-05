@@ -122,6 +122,8 @@ User.create = async function(req, res) {
  *     description: Login
  *     produces:
  *       - application/json
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - name: token
  *         in: header
