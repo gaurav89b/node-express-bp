@@ -1,0 +1,31 @@
+version: "3.2"
+
+services:
+  node-app:
+    build: .
+    command: npm start
+    ports:
+      - "3003:3000"
+    networks:
+      - appnetworkname
+    depends_on:
+      - db-mysql
+
+  db-mysql:
+    image: mysql:5
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3379:3306"
+    volumes:
+      - "mysql-data-node-app:/var/lib/mysql"
+    networks:
+    - appnetworkname
+
+networks:
+  appnetworkname:
+    driver: bridge      
+
+volumes:
+    mysql-data-node-app:
