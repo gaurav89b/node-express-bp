@@ -11,6 +11,16 @@ var usersRouter = require('./routes/users');
 const config = require('config');
 var app = express();
 
+var i18n = require("i18n");
+i18n.configure({
+  locales:['en', 'de'],
+  directory: __dirname + '/locales'
+});
+//i18n.setLocale('de');
+app.use(i18n.init);
+
+console.log(i18n.__('Hello 2'));
+
 var loggerD = require('./utilities/loggerUtility');
 
 loggerD.logError("teserror");
