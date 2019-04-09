@@ -13,3 +13,4 @@
 i.e 
 docker build -t gaurav89/node-web-app .
 docker run -p 3001:3000 -d gaurav89/node-web-app
+10) read values from .env file for enviornment variable

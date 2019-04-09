@@ -21,6 +21,10 @@ app.use(i18n.init);
 
 console.log(i18n.__('Hello 2'));
 
+// LOAD ENV
+require('dotenv').config();
+console.log(process.env.DB_HOST);
+
 var loggerD = require('./utilities/loggerUtility');
 
 loggerD.logError("teserror");
