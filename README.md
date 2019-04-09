@@ -6,3 +6,10 @@
 6) Swagger Support (localhost:3000/swagger)
 7) Centralized response parser
 8) Config , enviornment variable support
+9) Docker support :
+	docker build -t <username>/<appname> .
+	docker run -p 3001:3000 -d <username>/<appname>
+
+i.e 
+docker build -t gaurav89/node-web-app .
+docker run -p 3001:3000 -d gaurav89/node-web-app
