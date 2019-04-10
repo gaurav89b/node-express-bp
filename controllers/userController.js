@@ -6,6 +6,8 @@
 // 1) validate request
 // 2) call service function
 // 3) send respone
+// 4) in case of catch (promise) use next(error) i.e pass this to next middleware (last middle ware is error middlware in express)
+// 5) wrap main logic in try catch block and in catch use point 4 approach and return
 
 // Display list of all Genre.
 const UserModel = require('../models').User;
@@ -69,7 +71,7 @@ User.post = function(req, res) {
     res.send('NOT IMPLEMENTED: Genre post 1');
 };
 
-User.create = async function(req, res) {
+User.create = async function(req, res, next) {
 
     // 1) validate request
     // 2) call service function
@@ -110,7 +112,10 @@ User.create = async function(req, res) {
             };
             prepareResponse(res, obj)
         })
-        .catch();
+        //.catch();
+        .catch((error) => {
+            next(error);
+        });
 };
 
 /**
