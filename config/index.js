@@ -1,9 +1,12 @@
 var _ = require('lodash'),
 defaults = {};
+// LOAD ENV
+require('dotenv').config();
+// load all variables here and set in custom config. Not use env variable in application
 
 _.set(defaults, "Constants", {
     CONSTANT_NAME_1: "const_val",
-    BATCH: 1,
+    BATCH: 2,
     DEFAULT_ACTION: null
 });
 
@@ -18,5 +21,9 @@ function __getEnvConfig() {
     }
 }
 
-config = {};
+// set all variables which are fetched from env variable here.
+config = {
+    jwtPrivateKeyCustom: process.env.jwtPrivateKeyCustom,
+    debug:process.env.DB_HOST
+};
 exports = module.exports = _.defaultsDeep(config, __getEnvConfig(), defaults);

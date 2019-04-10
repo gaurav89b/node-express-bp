@@ -22,8 +22,11 @@ app.use(i18n.init);
 console.log(i18n.__('Hello 2'));
 
 // LOAD ENV
-require('dotenv').config();
-console.log(process.env.DB_HOST);
+//require('dotenv').config();
+//console.log(process.env.DB_HOST);
+
+const customConfig = require('./config');
+console.log(customConfig);
 
 var loggerD = require('./utilities/loggerUtility');
 
@@ -32,9 +35,10 @@ loggerD.logInfo("testinfo");
 loggerD.logWarning("teswarning");
 loggerD.logMessage("tesmessage", "debug");
 
-console.log(config.get("jwtPrivateKey"));
-if (!config.get("jwtPrivateKey")) {
+console.log(customConfig.jwtPrivateKeyCustom);
+if (!customConfig.jwtPrivateKeyCustom) {
   console.log("env_not_set");
+  loggerD.logError("env_not_set");
   // @todo move it also handle it gracefully i.e restart
   process.exit(1);
 }
