@@ -49,6 +49,7 @@ let User = {};
 
 User.list = async function(req, res) {
     const user = await UserService.list();
+    //const user = [];
     let obj = {
         status:1,
         message:2,
