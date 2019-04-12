@@ -7,14 +7,15 @@
 // 2) call service function
 // 3) send respone
 // 4) in case of catch (promise) use next(error) i.e pass this to next middleware (last middle ware is error middlware in express)
-// 5) wrap main logic in try catch block and in catch use point 4 approach and return
+// 5) wrap main logic in try catch block and in catch use point 4 approach and return [no need as we have used express-async-errors module]
 
 // Display list of all Genre.
 const UserModel = require('../models').User;
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const config = require('config');
+//const config = require('config');
+const customConfig = require('../config');
 
 //const UserRepo = require('../repositories').user;
 const UserService = require('../services').user;
@@ -70,6 +71,46 @@ User.post = function(req, res) {
     console.log(req.body.key);
     res.send('NOT IMPLEMENTED: Genre post 1');
 };
+
+/**
+ * @swagger
+ * /users/create:
+ *   post:
+ *     tags:
+ *       - users
+ *     description: Create Merchant
+ *     security:
+ *       - bearerAuth: []
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - $ref: "#/parameters/header-device-id"
+ *       - $ref: "#/parameters/header-device-type"
+ *       - name: body
+ *         in: body
+ *         description: status
+ *         required: true
+ *         schema:
+ *          type: object
+ *          required:
+ *           - Order
+ *          properties:
+ *           email:
+ *            type: string
+ *            enum: [0, 1]
+ *            default: "user@domain.com"
+ *           password:
+ *            type: string
+ *            example: "123444"
+ *           name:
+ *            type: string
+ *            example: "user"
+ *     responses:
+ *       200:
+ *         description: An array of users
+ *         schema:
+ *           //$ref: '#/definitions/users'
+ */
 
 User.create = async function(req, res, next) {
 
@@ -189,7 +230,7 @@ User.login = async function(req, res) {
     if (!isValid) {
         obj.data.error = "Not valid password";
     } else {
-        let token = jwt.sign({id:user.id, name:user.name, email: user.email}, config.get("jwtPrivateKey"));
+        let token = jwt.sign({id:user.id, name:user.name, email: user.email}, customConfig.jwtPrivateKeyCustom);
         obj.data.error = "valid password";
         obj.data.token = token;
     }
