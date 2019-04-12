@@ -24,6 +24,12 @@ function __getEnvConfig() {
 // set all variables which are fetched from env variable here.
 config = {
     jwtPrivateKeyCustom: process.env.jwtPrivateKeyCustom,
-    debug:process.env.DB_HOST
+    debug:process.env.DB_HOST,
+    DB_HOST: process.env.DB_HOST,
+    DB_USERNAME: process.env.DB_USERNAME,
+    DB_PASSWORD: process.env.DB_PASSWORD,
+    DB_NAME: process.env.DB_NAME,
+    BASE_URL: process.env.BASE_URL,
+    SWAGGER_BASE_URL: process.env.SWAGGER_BASE_URL,
 };
 exports = module.exports = _.defaultsDeep(config, __getEnvConfig(), defaults);
