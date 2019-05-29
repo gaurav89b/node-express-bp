@@ -13,6 +13,9 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+    env_file:
+      - web-variables.env # it will overwrite .env file content
+
 
   db-mysql:
     image: mysql:5
