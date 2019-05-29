@@ -2,10 +2,10 @@ version: "3.2"
 
 services:
   node-app:
-    build: .
+    image: "webapp:${TAG}"
     command: npm start
     ports:
-      - "3006:3006"
+      - "3006:3000"
     networks:
       - appnetworkname
     depends_on:
