@@ -2,10 +2,10 @@ version: "3.2"
 
 services:
   node-app:
-    image: "webapp:${TAG}"
+    image: "gaurav89/node-web-app:${TAG}"
     command: npm start
     ports:
-      - "3006:3000"
+      - "3006:3006"
     networks:
       - appnetworkname
     depends_on:
@@ -13,6 +13,9 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+    env_file:
+      - web-variables.env # it will overwrite .env file content
+
 
   db-mysql:
     image: mysql:5
