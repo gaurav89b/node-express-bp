@@ -8,7 +8,7 @@ var user_controller = require('../controllers').user;
 /* GET home page. */
 router.get('/', function(req, res, next) {
   //res.render('index', { title: 'Express' });
-  res.send("Hello World New");
+  res.send("Hello World New 2 docker new image" + process.env.ENV_VAR_CUSTOM);
 });
 
 router.get('/users', user_controller.list);

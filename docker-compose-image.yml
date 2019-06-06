@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   node-app:
-    build: .
+    image: "gaurav89/node-web-app:${TAG}"
     command: npm start
     ports:
       - "3006:3006"

@@ -14,3 +14,5 @@ i.e
 docker build -t gaurav89/node-web-app .
 docker run -p 3001:3000 -d gaurav89/node-web-app
 10) read values from .env file for enviornment variable
+11) docker-compose build && docker-compose up -d
+12) docker-compose -f docker-compose-image.yml up (custom docker-compose file using image name)
